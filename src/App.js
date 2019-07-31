@@ -1,26 +1,44 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
+import TodoStore from './Stors/TodoStore';
+import TodoEntry from './Components/TodoEntry/TodoEntry';
+import TOdoItems from './Components/TodoItems/TodoItems';
+import Footer from '../src/Components/Footer/Footer';
+import { observer } from 'mobx-react';
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+var currentPath = ""
+@observer
+class App extends Component {
 
-export default App;
+
+  componentDidUpdate(prevProps, prevState) {
+
+    if (currentPath !== this.props.history.location.pathname) {
+
+      switch (this.props.history.location.pathname) {
+        case '/active':
+          TodoStore.todoFilter = 'active'
+          break;
+        case '/completed':
+          TodoStore.todoFilter = 'completed'
+          break;
+        default:
+          TodoStore.todoFilter = 'all'
+      }
+    }
+  }
+  render() {
+    return (
+      <div className='todoapp'>
+        <TodoEntry />
+        <TOdoItems />
+        <Footer />
+      </div>
+    );
+  }
+}
+export default withRouter(App);
+
+
+
