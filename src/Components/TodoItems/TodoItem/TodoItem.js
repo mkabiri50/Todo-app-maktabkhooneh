@@ -2,9 +2,7 @@ import React,{Component} from 'react'
 import {observer} from 'mobx-react';
 @observer
 class TOdoItem extends Component {
-  state={
-    editText:''
-  }
+
   onToggle=()=>{
     this.props.todo.toggle();
   }
@@ -12,16 +10,12 @@ class TOdoItem extends Component {
 		this.props.todo.destroy();
   
   }
-      
-  
-
-
   render(){
     const {todo}=this.props;
     return (
       <li className={todo.completed ?  'completed' : ''}>
         <div className='view' >
-          <input onChange={this.onToggle} type="checkbox" className='toggle' checked={todo.completed} />
+          <input onChange={this.onToggle} type="checkbox" value=" " className='toggle' checked={todo.completed} />
           <label >{todo.title}</label>
           <button onClick={this.handleDestroy} className='destroy'></button>
         </div>
