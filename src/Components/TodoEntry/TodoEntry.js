@@ -10,6 +10,9 @@ class TodoEntry extends Component{
         this.setState({value:event.target.value})  
     }
     keyDownHandler=(event)=>{
+        if (this.state.value.trim()==='') {
+            return
+        }
         
         if (event.keyCode !==13){
             return
